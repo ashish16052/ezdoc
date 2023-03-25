@@ -6,6 +6,9 @@ import './Doc.scss'
 import Chart from '../ChartForm/ChartForm'
 import { saveAs } from 'file-saver';
 import { pdfExporter } from 'quill-to-pdf';
+import axios from 'axios';
+import { useParams } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 const TOOLBAR_OPTIONS = [
     [{ header: [1, 2, 3, false] }, { font: [] }],
@@ -19,7 +22,9 @@ const TOOLBAR_OPTIONS = [
     ['link', 'image', 'blockquote', 'code-block'],
 ]
 
-const Doc = () => {
+const Doc = (props) => {
+    const { id } = useParams()
+    const navigate = useNavigate();
     const [quill, setQuill] = useState()
     const [index, setIndex] = useState()
     const [showChart, setShowChart] = useState(false)
@@ -40,6 +45,18 @@ const Doc = () => {
         saveAs(pdfAsBlob, 'pdf-export.pdf'); // downloads from the browser
     }
 
+    const loadDoc = async () => {
+        const docs = await axios.get(`http://localhost:3001/doc/findone/${id}`)
+        console.log(docs.data);
+        if (quill) {
+            quill.updateContents(docs.data.delta)
+        }
+    }
+
+    useEffect(() => {
+        loadDoc()
+    }, [quill])
+
 
 
     const addImage = (url) => {
@@ -59,6 +76,16 @@ const Doc = () => {
     }, [quill])
 
     const saveData = async () => {
+        console.log(props.user);
+        axios.post("http://localhost:3001/doc/save", {
+            _id: id,
+            userId: props.user._id,
+            delta: quill.getContents()
+        }, {
+        })
+            .then(res => {
+                console.log(res.data);
+            })
         console.log('save');
     }
 
@@ -68,16 +95,22 @@ const Doc = () => {
         setShowChart(true)
     }
 
+    const goHome = () => {
+        navigate('/');
+    }
+
     return (
         <div className='Doc'>
             <Chart chartType={chartType} showChart={showChart} setShowChart={setShowChart} addImage={addImage} />
             <div className='sidebar'>
+                <h1 className='logo' onClick={goHome}>📄EzDoc</h1>
+
+                <p onClick={saveData}>Save Document</p>
+                <p onClick={clicksave}>Export PDF</p>
                 <h2>Insert Chart</h2>
                 <p onClick={() => openChart('bar')}>Histogram</p>
                 <p onClick={() => openChart('pie')}>Pie chart</p>
                 <p onClick={() => openChart('matrix')}>Confusion matrix</p>
-                <p onClick={saveData}>Save Document</p>
-                <p onClick={clicksave}>Export PDF</p>
             </div>
             <div className='Container' ref={wrapperRef}></div>
         </div>

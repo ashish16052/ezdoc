@@ -25,7 +25,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route exact path='/' element={user ? <Home user={user} /> : <Login />} />
-        <Route exact path='/doc' element={<Doc/>} />
+        <Route exact path='/doc/:id' element={<Doc user={user} />} />
       </Routes>
     </div>
   );

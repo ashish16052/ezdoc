@@ -1,17 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import './Home.scss'
+import axios from 'axios';
+import { v4 as uuidV4 } from 'uuid'
 
 const Home = (props) => {
 
   const user = props.user;
   const navigate = useNavigate();
-  const docArray = [1, 2, 3, 4]
+  const [docArray, setDocArray] = useState([])
   const boilerPlateArray = [1, 2, 3, 4]
 
-  const openDoc = () => {
-    navigate("/doc");
+  const openDoc = (i) => {
+    navigate(`/doc/${i._id}`);
   }
+
+  const openNewDoc = () => {
+    navigate(`/doc/${uuidV4()}`);
+  }
+
+  const getDocs = async () => {
+    const docs = await axios.get(`http://localhost:3001/doc/findall/${props.user._id}`)
+    console.log(docs.data);
+    setDocArray(docs.data)
+  }
+
+  useEffect(() => {
+    getDocs()
+  }, [])
+
 
   const signout = (e) => {
     sessionStorage.removeItem("user");
@@ -32,10 +49,10 @@ const Home = (props) => {
       <div className='doc-list'>
         {
           docArray.map((i, k) => (
-            <div className='doc-thumb' onClick={openDoc}>doc-{i}</div>
+            <div doc={i} className='doc-thumb' onClick={() => openDoc(i)}>doc-{i._id}</div>
           ))
         }
-        <div className='doc-thumb plus' onClick={openDoc}>+</div>
+        <div className='doc-thumb plus' onClick={openNewDoc}>+</div>
       </div>
       <h2 className='title'>Boiler plates</h2>
       <div className='doc-list'>
@@ -44,7 +61,7 @@ const Home = (props) => {
             <div className='doc-thumb' onClick={openDoc}>Boilerplate-{i}</div>
           ))
         }
-        <div className='doc-thumb plus' onClick={openDoc}>+</div>
+        <div className='doc-thumb plus' onClick={openNewDoc}>+</div>
       </div>
     </div>
   )

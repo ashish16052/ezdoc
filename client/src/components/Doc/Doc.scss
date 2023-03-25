@@ -9,7 +9,7 @@
             position: fixed;
             top: 0;
             z-index: 1;
-            width: 60vw;
+            width: 80vw;
             background-color: white;
         }
 
@@ -17,14 +17,19 @@
             margin-top: 40px;
             font-size: 20px;
             height: 90vh;
-            width: 60vw;
+            width: 80vw;
         }
     }
 
     .sidebar {
         padding: 10px 20px;
+
         p {
             margin: 20px 0;
+            cursor: pointer;
+        }
+
+        .logo {
             cursor: pointer;
         }
     }

@@ -4,6 +4,7 @@ import { CategoryScale } from "chart.js";
 import { useState, useRef } from "react";
 import { Data } from "./Data";
 import BarChart from "../Barchart/Barchart";
+import axios from 'axios';
 import './ChartForm.scss'
 
 Chart.register(CategoryScale);
@@ -17,10 +18,34 @@ const ChartForm = (props) => {
         const base64Image = chartRef.current.toBase64Image();
         props.addImage(base64Image)
         props.setShowChart(false)
+        setChartData(null)
+    }
+
+    const cancelClick = () => {
+        setChartData(null)
+        props.setShowChart(false)
     }
 
     const upload = (e) => {
-        console.log(file)
+        // console.log(file)
+        const data = new FormData()
+        data.append('file', file)
+        axios.post("http://localhost:3001/excel/upload", data, { // receive two parameter endpoint url ,form data 
+        })
+            .then(res => { // then print response status
+                if (res.data) {
+                    var newChartData = {
+                        labels: res.data.chartLabel,
+                        datasets: [
+                          {
+                            label: '# of Votes',
+                            data: res.data.chartData
+                          }]
+                      };
+                    console.log(newChartData);
+                    setChartData(newChartData)
+                }
+            })
     }
 
     return (
@@ -36,7 +61,10 @@ const ChartForm = (props) => {
                             </div>
                     }
                     <img id="url" />
+                    <div className='buttons'>
                     <div className='save' onClick={handleClick}>Save</div>
+                    <div className='cancel' onClick={cancelClick}>Cancel</div>
+                    </div>
                 </div>
             </div>
             : null

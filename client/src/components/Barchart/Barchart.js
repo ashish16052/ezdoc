@@ -10,11 +10,31 @@ const BarChart = ({ chartData, chartRef }) => {
                     plugins: {
                         title: {
                             display: true,
-                            text: "Users Gained between 2016-2020"
+                            text: "Monthly Salary"
                         },
                         legend: {
                             display: false
                         }
+                    },
+                    scales: {
+                        xAxes: [{
+                            display: false,
+                            barPercentage: 1.3,
+                            ticks: {
+                                max: 3,
+                            }
+                        }, {
+                            display: true,
+                            ticks: {
+                                autoSkip: false,
+                                max: 4,
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
                     }
                 }}
             />

@@ -1,0 +1,30 @@
+.Doc {
+    display: flex;
+    justify-content: center;
+
+    .Container {
+        .ql-toolbar {
+            display: flex;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            z-index: 1;
+            width: 60vw;
+            background-color: white;
+        }
+
+        .ql-container {
+            margin-top: 40px;
+            font-size: 20px;
+            height: 90vh;
+            width: 60vw;
+        }
+    }
+
+    .sidebar {
+        padding: 10px 20px;
+        p {
+            margin: 20px 0;
+        }
+    }
+}

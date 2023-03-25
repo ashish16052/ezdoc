@@ -1,0 +1,36 @@
+.Chart {
+    background-color: #0000005f;
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .chart-box {
+        background-color: white;
+        border-radius: 10px;
+        height: fit-content;
+        width: 60vw;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 30px 30px;
+        display: flex;
+        flex-direction: column;
+
+        .save {
+            margin-top: 20px;
+            background-color: #454545;
+            color: #f3f3f3;
+            padding: 10px 20px;
+            width: 70px;
+            border-radius: 5px;
+            font-size: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+    }
+}

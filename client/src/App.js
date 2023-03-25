@@ -25,7 +25,8 @@ function App() {
     <div className="App">
       <Routes>
         <Route exact path='/' element={user ? <Home user={user} /> : <Login />} />
-        <Route exact path='/doc/:id' element={<Doc user={user} />} />
+        <Route exact path='/doc/:id' element={user ? <Doc user={user} type={'doc'} /> : <Login />} />
+        <Route exact path='/boiler/:id' element={user ? <Doc user={user} type={'boiler'} /> : <Login />} />
       </Routes>
     </div>
   );

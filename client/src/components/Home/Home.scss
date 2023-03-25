@@ -41,11 +41,13 @@
         flex-wrap: wrap;
         margin-bottom: 20px;
         .doc-thumb{
+            padding: 10px;
             height: 180px;
             width: 15%;
             margin-right:20px;
             cursor: pointer;
             border: solid 1px #454545;
+            margin-bottom: 20px;
         }
         .plus{
             font-size: 100px;

@@ -46,10 +46,18 @@ const Doc = (props) => {
     }
 
     const loadDoc = async () => {
-        const docs = await axios.get(`http://localhost:3001/doc/findone/${id}`)
-        console.log(docs.data);
-        if (quill) {
-            quill.updateContents(docs.data.delta)
+        console.log(props.type);
+        if (props.type == 'doc') {
+            const docs = await axios.get(`http://localhost:3001/doc/findone/${id}`)
+            if (quill) {
+                quill.updateContents(docs.data.delta)
+            }
+        }
+        else if (props.type == 'boiler') {
+            const docs = await axios.get(`http://localhost:3001/boiler/findone/${id}`)
+            if (quill) {
+                quill.updateContents(docs.data.delta)
+            }
         }
     }
 
@@ -76,17 +84,28 @@ const Doc = (props) => {
     }, [quill])
 
     const saveData = async () => {
-        console.log(props.user);
-        axios.post("http://localhost:3001/doc/save", {
-            _id: id,
-            userId: props.user._id,
-            delta: quill.getContents()
-        }, {
-        })
-            .then(res => {
-                console.log(res.data);
+        if (props.type == 'doc') {
+            axios.post("http://localhost:3001/doc/save", {
+                _id: id,
+                userId: props.user._id,
+                delta: quill.getContents()
+            }, {
             })
-        console.log('save');
+                .then(res => {
+                    console.log(res.data);
+                })
+        }
+        else if (props.type == 'boiler') {
+            axios.post("http://localhost:3001/boiler/save", {
+                _id: id,
+                userId: props.user._id,
+                delta: quill.getContents()
+            }, {
+            })
+                .then(res => {
+                    console.log(res.data);
+                })
+        }
     }
 
     const openChart = (type) => {

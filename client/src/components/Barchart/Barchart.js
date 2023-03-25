@@ -16,26 +16,6 @@ const BarChart = ({ chartData, chartRef }) => {
                             display: false
                         }
                     },
-                    scales: {
-                        xAxes: [{
-                            display: false,
-                            barPercentage: 1.3,
-                            ticks: {
-                                max: 3,
-                            }
-                        }, {
-                            display: true,
-                            ticks: {
-                                autoSkip: false,
-                                max: 4,
-                            }
-                        }],
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    },
                 }}
             />
         </div>

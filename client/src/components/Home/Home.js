@@ -9,24 +9,41 @@ const Home = (props) => {
   const user = props.user;
   const navigate = useNavigate();
   const [docArray, setDocArray] = useState([])
-  const boilerPlateArray = [1, 2, 3, 4]
+  const [boilerPlateArray, setBoilerPlateArray] = useState([])
 
   const openDoc = (i) => {
     navigate(`/doc/${i._id}`);
+  }
+
+  const openBoiler = (i) => {
+    navigate(`/boiler/${i._id}`);
   }
 
   const openNewDoc = () => {
     navigate(`/doc/${uuidV4()}`);
   }
 
+  const openNewBoiler = () => {
+    navigate(`/boiler/${uuidV4()}`);
+  }
+
   const getDocs = async () => {
     const docs = await axios.get(`http://localhost:3001/doc/findall/${props.user._id}`)
-    console.log(docs.data);
-    setDocArray(docs.data)
+    if (docs) {
+      setDocArray(docs.data)
+    }
+  }
+
+  const getBoiler = async () => {
+    const docs = await axios.get(`http://localhost:3001/boiler/findall/${props.user._id}`)
+    if (docs) {
+      setBoilerPlateArray(docs.data)
+    }
   }
 
   useEffect(() => {
     getDocs()
+    getBoiler()
   }, [])
 
 
@@ -49,7 +66,7 @@ const Home = (props) => {
       <div className='doc-list'>
         {
           docArray.map((i, k) => (
-            <div doc={i} className='doc-thumb' onClick={() => openDoc(i)}>doc-{i._id}</div>
+            <div key={k} doc={i} className='doc-thumb' onClick={() => openDoc(i)}>doc-{i._id}</div>
           ))
         }
         <div className='doc-thumb plus' onClick={openNewDoc}>+</div>
@@ -58,10 +75,10 @@ const Home = (props) => {
       <div className='doc-list'>
         {
           boilerPlateArray.map((i, k) => (
-            <div className='doc-thumb' onClick={openDoc}>Boilerplate-{i}</div>
+            <div key={k} className='doc-thumb' onClick={() => openBoiler(i)}>Boilerplate-{i._id}</div>
           ))
         }
-        <div className='doc-thumb plus' onClick={openNewDoc}>+</div>
+        <div className='doc-thumb plus' onClick={openNewBoiler}>+</div>
       </div>
     </div>
   )

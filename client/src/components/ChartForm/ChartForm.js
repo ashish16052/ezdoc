@@ -6,6 +6,7 @@ import { Data } from "./Data";
 import BarChart from "../Barchart/Barchart";
 import axios from 'axios';
 import './ChartForm.scss'
+import PieChart from '../PieChart/PieChart';
 
 Chart.register(CategoryScale);
 
@@ -37,11 +38,11 @@ const ChartForm = (props) => {
                     var newChartData = {
                         labels: res.data.chartLabel,
                         datasets: [
-                          {
-                            label: '# of Votes',
-                            data: res.data.chartData
-                          }]
-                      };
+                            {
+                                label: '# of Votes',
+                                data: res.data.chartData
+                            }]
+                    };
                     console.log(newChartData);
                     setChartData(newChartData)
                 }
@@ -54,19 +55,25 @@ const ChartForm = (props) => {
                 <div className='chart-box'>
                     {
                         chartData ?
-                            <BarChart chartData={chartData} chartRef={chartRef} /> :
-                            <div className="form-group">
+                            chartData && props.chartType == 'bar' ?
+                                < BarChart chartData={chartData} chartRef={chartRef} />
+                                :
+                                chartData && props.chartType == 'pie' ?
+                                    <PieChart chartData={chartData} chartRef={chartRef} />
+                                    :
+                                    null :
+                            < div className="form-group">
                                 <input type="file" onChange={(e) => setFile(e.target.files[0])} />
                                 <button onClick={upload}>Upload</button>
                             </div>
                     }
                     <img id="url" />
                     <div className='buttons'>
-                    <div className='save' onClick={handleClick}>Save</div>
-                    <div className='cancel' onClick={cancelClick}>Cancel</div>
+                        <div className='save' onClick={handleClick}>Save</div>
+                        <div className='cancel' onClick={cancelClick}>Cancel</div>
                     </div>
                 </div>
-            </div>
+            </div >
             : null
     )
 }

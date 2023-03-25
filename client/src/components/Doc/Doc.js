@@ -4,6 +4,8 @@ import Quill from 'quill'
 import 'quill/dist/quill.snow.css'
 import './Doc.scss'
 import Chart from '../ChartForm/ChartForm'
+import { saveAs } from 'file-saver';
+import { pdfExporter } from 'quill-to-pdf';
 
 const TOOLBAR_OPTIONS = [
     [{ header: [1, 2, 3, false] }, { font: [] }],
@@ -21,6 +23,7 @@ const Doc = () => {
     const [quill, setQuill] = useState()
     const [index, setIndex] = useState()
     const [showChart, setShowChart] = useState(false)
+    const [chartType, setChartType] = useState()
 
     const wrapperRef = useCallback(wrapper => {
         if (!wrapper) return
@@ -30,6 +33,14 @@ const Doc = () => {
         const q = new Quill(editor, { theme: 'snow', modules: { toolbar: TOOLBAR_OPTIONS } })
         setQuill(q)
     }, [])
+
+    const clicksave = async () => {
+        const delta = quill.getContents(); // gets the Quill delta
+        const pdfAsBlob = await pdfExporter.generatePdf(delta); // converts to PDF
+        saveAs(pdfAsBlob, 'pdf-export.pdf'); // downloads from the browser
+    }
+
+
 
     const addImage = (url) => {
         quill.insertEmbed(index, 'image', url);
@@ -47,20 +58,26 @@ const Doc = () => {
         }
     }, [quill])
 
+    const saveData = async () => {
+        console.log('save');
+    }
 
-    const openChart = () => {
+    const openChart = (type) => {
+        setChartType(type)
         console.log(index);
         setShowChart(true)
     }
 
     return (
         <div className='Doc'>
-            <Chart showChart={showChart} setShowChart={setShowChart} addImage={addImage} />
+            <Chart chartType={chartType} showChart={showChart} setShowChart={setShowChart} addImage={addImage} />
             <div className='sidebar'>
                 <h2>Insert Chart</h2>
-                <p onClick={openChart}>Histogram</p>
-                <p onClick={openChart}>Pie chart</p>
-                <p onClick={openChart}>Confusion matrix</p>
+                <p onClick={() => openChart('bar')}>Histogram</p>
+                <p onClick={() => openChart('pie')}>Pie chart</p>
+                <p onClick={() => openChart('matrix')}>Confusion matrix</p>
+                <p onClick={saveData}>Save Document</p>
+                <p onClick={clicksave}>Export PDF</p>
             </div>
             <div className='Container' ref={wrapperRef}></div>
         </div>

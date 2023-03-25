@@ -35,7 +35,7 @@ const BarChart = ({ chartData, chartRef }) => {
                                 beginAtZero: true
                             }
                         }]
-                    }
+                    },
                 }}
             />
         </div>

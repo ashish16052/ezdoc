@@ -1,0 +1,16 @@
+.login{
+    display: flex;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .sign{
+        background-color: #454545;
+        color: #f3f3f3;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+}

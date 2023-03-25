@@ -1,0 +1,56 @@
+.home {
+    .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+
+        .user {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            p {
+                font-size: 20px;
+            }
+
+            img {
+                height: 40px;
+                margin: 0 20px;
+                border-radius: 50%;
+            }
+
+            .sign-out {
+                background-color: #454545;
+                color: #f3f3f3;
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-size: 18px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .title{
+        margin-bottom: 30px;
+    }
+
+    .doc-list {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+        .doc-thumb{
+            height: 180px;
+            width: 15%;
+            margin-right:20px;
+            cursor: pointer;
+            border: solid 1px #454545;
+        }
+        .plus{
+            font-size: 100px;
+            text-align: center;
+            border: dashed 2px #454545;
+        }
+    }
+}

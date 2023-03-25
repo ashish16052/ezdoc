@@ -21,7 +21,7 @@ module.exports.controllerFunction = function (app) {
     mainRouter.post('/upload', upload.single('file'), (req, res) => {
         var doc = parser.parseXls2Json(req.file.path);
         console.log(doc[0][0]);
-        const numArray = doc[0].map(a => a.monthly_salary);
+        const numArray = doc[0].map(a => a[req.body.column]);
         const freq = {}
         for (let i = 0; i < numArray.length; i++) {
             freq[numArray[i]] = (freq[numArray[i]] || 0) + 1;

@@ -58,7 +58,7 @@ const Home = (props) => {
         <h1>📄EzDoc</h1>
         <div className='user'>
           <p>{user.name}</p>
-          <img src={user.pfp} />
+          <img referrerpolicy="no-referrer" src={user.pfp} />
           <div className='sign-out' onClick={signout}>Sign out</div>
         </div>
       </div>

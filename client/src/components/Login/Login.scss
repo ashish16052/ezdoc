@@ -1,16 +1,27 @@
-.login{
+.login {
     display: flex;
+    flex-direction: column;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: rgb(123, 0, 255);
+    background: linear-gradient(90deg, rgba(123, 0, 255, 1) 0%, rgba(92, 213, 255, 1) 0%, rgba(115, 11, 226, 1) 51%, rgba(253, 29, 151, 1) 100%);
+    color: #f3f3f3;
+    transform: scaleX(1.1);
+    overflow-y: hidden;
 
-    .sign{
+    .sign {
+        margin: 20px 0;
         background-color: #454545;
         color: #f3f3f3;
         padding: 10px 20px;
         border-radius: 5px;
         font-size: 20px;
         cursor: pointer;
+    }
+
+    img {
+        height: 400px;
     }
 }

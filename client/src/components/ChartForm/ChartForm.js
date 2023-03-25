@@ -13,11 +13,12 @@ Chart.register(CategoryScale);
 const ChartForm = (props) => {
     const [chartData, setChartData] = useState();
     const [file, setFile] = useState()
+    const [col, setCol] = useState("")
     const chartRef = useRef(null);
 
     const handleClick = () => {
         const base64Image = chartRef.current.toBase64Image();
-        props.addImage(base64Image)
+        props.addImage(base64Image, props.chartType)
         props.setShowChart(false)
         setChartData(null)
     }
@@ -31,7 +32,8 @@ const ChartForm = (props) => {
         // console.log(file)
         const data = new FormData()
         data.append('file', file)
-        axios.post("http://localhost:3001/excel/upload", data, { // receive two parameter endpoint url ,form data 
+        data.append('column', col)
+        axios.post("http://localhost:3001/excel/upload", data, {
         })
             .then(res => { // then print response status
                 if (res.data) {
@@ -43,7 +45,6 @@ const ChartForm = (props) => {
                                 data: res.data.chartData
                             }]
                     };
-                    console.log(newChartData);
                     setChartData(newChartData)
                 }
             })
@@ -62,7 +63,8 @@ const ChartForm = (props) => {
                                     <PieChart chartData={chartData} chartRef={chartRef} />
                                     :
                                     null :
-                            < div className="form-group">
+                            <div className="form-group">
+                                <input value={col} type="text" onChange={(e) => setCol(e.target.value)} />
                                 <input type="file" onChange={(e) => setFile(e.target.files[0])} />
                                 <button onClick={upload}>Upload</button>
                             </div>

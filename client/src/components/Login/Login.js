@@ -1,4 +1,5 @@
 import React from 'react'
+import screenshot from '../../Screenshot.png'
 import './Login.scss'
 
 const Login = () => {
@@ -8,7 +9,10 @@ const Login = () => {
 
     return (
         <div className='login'>
-            <div onClick={signIn} className='sign'>Sign In</div>
+            <h1>📄EzDoc</h1>
+            <p>Creating Documents was never so Ezz</p>
+            <div onClick={signIn} className='sign'>Get started</div>
+            <img src={screenshot}/>
         </div>
     )
 }

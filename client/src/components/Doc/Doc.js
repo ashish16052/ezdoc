@@ -67,7 +67,9 @@ const Doc = (props) => {
 
 
 
-    const addImage = (url) => {
+    const addImage = (url,chartType) => {
+        var tempData = quill.getContents()
+        console.log(tempData);
         quill.insertEmbed(index, 'image', url);
     }
 
@@ -110,7 +112,7 @@ const Doc = (props) => {
 
     const openChart = (type) => {
         setChartType(type)
-        console.log(index);
+        // console.log(index);
         setShowChart(true)
     }
 
